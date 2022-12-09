@@ -12,7 +12,7 @@ let input = {
     language: "Solidity",
     sources: {
       "ticketsale.sol": {
-        content: source,
+        content: source
       },
     },
     settings: {
@@ -27,4 +27,8 @@ let input = {
   const output = JSON.parse(solc.compile(JSON.stringify(input)));
   const contracts = output.contracts["ticketsale.sol"];
   
-  console.log(contracts.ticketsale);
+  for (let contractName in contracts) {
+    const contract = contracts[contractName];
+    module.exports= {"abi":contract.abi,"bytecode":contract.evm.bytecode.object};
+    console.log(JSON.stringify(contract.abi));
+}
